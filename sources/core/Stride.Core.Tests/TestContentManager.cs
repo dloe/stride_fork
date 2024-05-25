@@ -193,6 +193,29 @@ namespace Stride.Core.Tests
         }
 
         [Fact]
+        public void SimpleSaveData_nullURL()
+        {
+            var b1 = new B();
+            b1.A = new A { I = 18 };
+
+            var databaseProvider = CreateDatabaseProvider();
+            var assetManager1 = new ContentManager(databaseProvider);
+
+            string urlNull = null;
+
+            Assert.Throws<ArgumentNullException>(() => assetManager1.Save(urlNull, b1));
+        }
+
+        [Fact]
+        public void SimpleSaveData_nullAsset()
+        {
+            var databaseProvider = CreateDatabaseProvider();
+            var assetManager1 = new ContentManager(databaseProvider);
+
+            Assert.Throws<ArgumentNullException>(() => assetManager1.Save("test3", null));
+        }
+
+        [Fact]
         public void LifetimeShared()
         {
             var c1 = new C { I = 16 };
