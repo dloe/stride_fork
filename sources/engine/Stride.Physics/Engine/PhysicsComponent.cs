@@ -694,6 +694,7 @@ namespace Stride.Engine
 
             BoneIndex = -1;
 
+            //remove rigid body?
             OnAttach();
 
             //ensure ignore collisions

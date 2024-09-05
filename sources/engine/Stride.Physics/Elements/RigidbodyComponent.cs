@@ -27,6 +27,8 @@ namespace Stride.Physics
         private float angularDamping;
         private float linearDamping;
         private bool overrideGravity;
+        [DataMemberIgnore]
+        internal bool attached = false;
 
         /// <summary>
         /// Gets the linked constraints.
@@ -120,7 +122,8 @@ namespace Stride.Physics
                 if (InternalRigidBody == null)
                 {
                     //When setting ColliderShape, setup could have been previously skipped (eg when PhysicsComponent is created using GetOrCreate)
-                    ReAttach();
+                    if(attached)
+                        ReAttach();
                     return;
                 }
 
@@ -349,6 +352,7 @@ namespace Stride.Physics
             RigidBodyType = IsKinematic ? RigidBodyTypes.Kinematic : RigidBodyTypes.Dynamic;
 
             Simulation.AddRigidBody(this, (CollisionFilterGroupFlags)CollisionGroup, CanCollideWith);
+            attached = true;
         }
 
         protected override void OnDetach()
